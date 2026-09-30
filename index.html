@@ -1,0 +1,1944 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#FBF6EC">
+<title>Le Baobab Gourmand — Cuisine béninoise à Cotonou</title>
+<meta name="description" content="Le Baobab Gourmand — cuisine béninoise généreuse à Fidjrossè, Cotonou. Menu digital, commande WhatsApp, livraison rapide.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700;9..144,900&family=DM+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   TOKENS
+============================================================ */
+:root{
+  --bg:#FBF6EC;
+  --bg-2:#F4EAD8;
+  --ink:#1C1410;
+  --ink-2:#5B4A3E;
+  --ink-3:#94826F;
+  --line:#E8DCC8;
+  --line-2:#EFE5D4;
+  --card:#FFFFFF;
+  --terra:#D2541E;
+  --terra-2:#A83F11;
+  --terra-soft:#FCE6D8;
+  --forest:#123B2A;
+  --forest-2:#1E5C40;
+  --forest-soft:#DCEBE0;
+  --gold:#EBA93A;
+  --gold-soft:#FDF0D2;
+  --radius:22px;
+  --radius-sm:14px;
+  --shadow-sm:0 1px 2px rgba(28,20,16,.05), 0 6px 16px -10px rgba(28,20,16,.14);
+  --shadow-md:0 14px 34px -16px rgba(28,20,16,.22), 0 4px 10px -6px rgba(28,20,16,.08);
+  --shadow-lg:0 40px 80px -28px rgba(28,20,16,.34);
+  --ease:cubic-bezier(.22,.72,.28,1);
+  --ease-out:cubic-bezier(.16,1,.3,1);
+  --nav-h:72px;
+  --safe-top:env(safe-area-inset-top,0px);
+  --safe-bot:env(safe-area-inset-bottom,0px);
+}
+
+/* ============================================================
+   RESET & BASE
+============================================================ */
+*,*::before,*::after{box-sizing:border-box}
+html{
+  scroll-behavior:smooth;
+  scroll-padding-top:calc(var(--nav-h) + 90px + var(--safe-top));
+  -webkit-text-size-adjust:100%;
+}
+body{
+  margin:0;
+  font-family:'DM Sans',system-ui,-apple-system,sans-serif;
+  background:var(--bg);
+  color:var(--ink);
+  line-height:1.55;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+body.no-scroll{overflow:hidden}
+img,svg{display:block;max-width:100%}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;padding:0}
+a{color:inherit;text-decoration:none}
+ul,ol{margin:0;padding:0;list-style:none}
+h1,h2,h3,h4,p{margin:0}
+:focus-visible{outline:2.5px solid var(--terra);outline-offset:3px;border-radius:8px}
+::selection{background:var(--terra);color:#fff}
+
+.font-display{font-family:'Fraunces',Georgia,serif;font-optical-sizing:auto}
+
+/* ============================================================
+   UTILITIES
+============================================================ */
+.wrap{width:min(1180px,100% - 40px);margin-inline:auto}
+@media (max-width:600px){.wrap{width:min(1180px,100% - 28px)}}
+
+.eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:11px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;
+}
+.eyebrow::before{content:"";width:22px;height:1.5px;background:currentColor;opacity:.5}
+
+/* ============================================================
+   GRAIN OVERLAY
+============================================================ */
+.grain{
+  position:fixed;inset:0;z-index:9999;pointer-events:none;
+  opacity:.05;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ============================================================
+   SKIP + PROGRESS
+============================================================ */
+.skip{
+  position:fixed;top:12px;left:12px;z-index:10000;
+  padding:10px 16px;border-radius:999px;background:var(--ink);color:#fff;
+  font-weight:700;font-size:14px;
+  transform:translateY(-200%);transition:transform .3s var(--ease);
+}
+.skip:focus{transform:translateY(0)}
+
+.progress{
+  position:fixed;top:0;left:0;right:0;height:3px;z-index:999;
+  pointer-events:none;
+}
+.progress__bar{
+  height:100%;width:0;
+  background:linear-gradient(90deg,var(--terra),var(--gold));
+  transition:width .1s linear;
+  box-shadow:0 0 12px rgba(210,84,30,.5);
+}
+
+/* ============================================================
+   HEADER
+============================================================ */
+.header{
+  position:fixed;top:0;left:0;right:0;z-index:900;
+  padding-top:var(--safe-top);
+  transition:background .4s var(--ease),backdrop-filter .4s var(--ease);
+}
+.header::after{
+  content:"";position:absolute;left:0;right:0;bottom:0;height:1px;
+  background:var(--line);opacity:0;transition:opacity .4s var(--ease);
+}
+.header.scrolled{
+  background:rgba(251,246,236,.82);
+  -webkit-backdrop-filter:blur(18px) saturate(1.4);
+  backdrop-filter:blur(18px) saturate(1.4);
+}
+.header.scrolled::after{opacity:1}
+
+.nav{
+  height:var(--nav-h);
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+}
+.brand{display:flex;align-items:center;gap:11px;font-weight:800;font-size:17px;letter-spacing:-.01em}
+.brand__mark{width:40px;height:40px;flex:none;transition:transform .5s var(--ease)}
+.brand:hover .brand__mark{transform:rotate(-12deg) scale(1.06)}
+.brand__name{font-family:'Fraunces',serif;font-weight:900;font-size:19px;line-height:1}
+.brand__name em{color:var(--terra);font-style:normal}
+
+.nav__links{display:none;gap:6px;align-items:center}
+@media (min-width:900px){.nav__links{display:flex}}
+.nav__link{
+  position:relative;
+  padding:9px 14px;border-radius:999px;
+  font-size:14.5px;font-weight:600;color:var(--ink-2);
+  transition:color .25s var(--ease),background .25s var(--ease);
+}
+.nav__link::after{
+  content:"";position:absolute;left:50%;bottom:4px;
+  width:4px;height:4px;border-radius:50%;background:var(--terra);
+  transform:translateX(-50%) scale(0);
+  transition:transform .3s var(--ease);
+}
+.nav__link:hover{color:var(--ink);background:rgba(28,20,16,.05)}
+.nav__link.active{color:var(--terra)}
+.nav__link.active::after{transform:translateX(-50%) scale(1)}
+
+.cart-btn{
+  position:relative;
+  display:inline-flex;align-items:center;gap:9px;
+  height:46px;padding:0 18px;border-radius:999px;
+  background:var(--ink);color:#fff;
+  font-weight:700;font-size:14px;overflow:hidden;
+  transition:transform .3s var(--ease),box-shadow .3s var(--ease);
+  box-shadow:0 8px 22px -10px rgba(28,20,16,.5);
+}
+.cart-btn::before{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.28) 50%,transparent 70%);
+  transform:translateX(-120%);transition:transform .7s var(--ease);
+}
+.cart-btn:hover::before{transform:translateX(120%)}
+.cart-btn:hover{transform:translateY(-2px);box-shadow:0 14px 28px -12px rgba(28,20,16,.6)}
+.cart-btn:active{transform:scale(.96)}
+.cart-btn__label{display:none}
+@media (min-width:520px){.cart-btn__label{display:inline}}
+.cart-btn__count{
+  position:absolute;top:-6px;right:-6px;
+  min-width:24px;height:24px;padding:0 6px;
+  display:grid;place-items:center;border-radius:999px;
+  background:var(--terra);color:#fff;font-size:11.5px;font-weight:800;
+  border:2.5px solid var(--bg);
+  transform:scale(0);transition:transform .35s var(--ease);
+}
+.cart-btn__count.show{transform:scale(1)}
+.cart-btn__count.pop{animation:pop .4s var(--ease)}
+@keyframes pop{0%{transform:scale(1)}40%{transform:scale(1.45)}100%{transform:scale(1)}}
+
+/* ============================================================
+   HERO
+============================================================ */
+.hero{
+  position:relative;
+  min-height:100svh;
+  display:flex;flex-direction:column;justify-content:center;
+  padding:calc(var(--nav-h) + var(--safe-top) + 40px) 0 200px;
+  overflow:hidden;
+  isolation:isolate;
+}
+.hero__bg{
+  position:absolute;inset:0;z-index:-3;
+  background:
+    radial-gradient(120% 80% at 78% 18%, #FFE3B8 0%, transparent 55%),
+    radial-gradient(90% 70% at 12% 90%, #F2D9BC 0%, transparent 60%),
+    linear-gradient(180deg,#FDF8EF 0%, #FBF6EC 60%, #F4E7D2 100%);
+}
+.hero__spot{
+  position:absolute;z-index:-1;pointer-events:none;
+  width:640px;height:640px;border-radius:50%;
+  background:radial-gradient(circle,rgba(235,169,58,.22) 0%,transparent 62%);
+  transform:translate(-50%,-50%);
+  opacity:0;transition:opacity .8s var(--ease);
+}
+@media (hover:hover) and (min-width:900px){.hero__spot{opacity:1}}
+
+/* Soleil décoratif */
+.sun{
+  position:absolute;
+  top:14%;right:-12%;
+  width:min(560px,72vw);aspect-ratio:1;
+  z-index:-2;
+  animation:sunfloat 12s ease-in-out infinite;
+}
+@media (min-width:900px){.sun{right:2%;top:10%}}
+@keyframes sunfloat{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-18px)}
+}
+.sun__disc{
+  position:absolute;inset:14%;border-radius:50%;
+  background:radial-gradient(circle at 42% 38%, #FFE9B8, #F5B24E 55%, #E07A2E 100%);
+  box-shadow:0 0 90px 30px rgba(235,169,58,.42);
+}
+.sun__ring{
+  position:absolute;inset:0;border-radius:50%;
+  border:1.5px dashed rgba(210,84,30,.28);
+  animation:spin 44s linear infinite;
+}
+.sun__ring:nth-child(3){inset:7%;animation-duration:30s;animation-direction:reverse;border-style:dotted;border-color:rgba(18,59,42,.18)}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* Baobab — VRAIE PHOTO en silhouette */
+.baobab{
+  position:absolute;
+  left:0;right:0;bottom:0;
+  height:62%;
+  z-index:-1;
+  pointer-events:none;
+  background-image:url('https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?q=80&w=2000&auto=format&fit=crop');
+  background-size:cover;
+  background-position:center bottom;
+  background-repeat:no-repeat;
+  filter:brightness(.14) contrast(1.35) saturate(.15);
+  opacity:.92;
+  -webkit-mask-image:linear-gradient(180deg,
+    transparent 0%,
+    rgba(0,0,0,.35) 18%,
+    rgba(0,0,0,.85) 40%,
+    #000 60%,
+    #000 100%);
+          mask-image:linear-gradient(180deg,
+    transparent 0%,
+    rgba(0,0,0,.35) 18%,
+    rgba(0,0,0,.85) 40%,
+    #000 60%,
+    #000 100%);
+  will-change:transform,opacity;
+  animation:baobabFade 2s var(--ease-out) .2s both;
+}
+@keyframes baobabFade{
+  from{opacity:0;transform:translateY(30px)}
+  to{opacity:.92;transform:translateY(0)}
+}
+@media (max-width:640px){
+  .baobab{height:52%;filter:brightness(.16) contrast(1.3) saturate(.2)}
+}
+
+.hero__content{position:relative;z-index:2;text-align:center}
+@media (min-width:900px){.hero__content{text-align:left;max-width:620px}}
+
+.hero__badge{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:8px 15px;border-radius:999px;
+  background:rgba(18,59,42,.07);color:var(--forest-2);
+  font-size:11.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;
+  border:1px solid rgba(18,59,42,.1);
+  opacity:0;animation:fadeUp .8s var(--ease-out) .1s forwards;
+}
+.hero__badge svg{width:14px;height:14px}
+
+.hero__title{
+  font-family:'Fraunces',serif;font-weight:900;
+  font-size:clamp(2.9rem,11vw,6.4rem);
+  line-height:.94;letter-spacing:-.035em;
+  margin-top:22px;color:var(--ink);
+}
+.hero__title .line{display:block;overflow:hidden;padding-bottom:.06em}
+.hero__title .line>span{
+  display:block;transform:translateY(110%);
+  animation:lineUp 1s var(--ease-out) forwards;
+}
+.hero__title .line:nth-child(1)>span{animation-delay:.15s}
+.hero__title .line:nth-child(2)>span{animation-delay:.28s}
+.hero__title em{
+  font-style:italic;color:var(--terra);position:relative;
+}
+.hero__title em::after{
+  content:"";position:absolute;left:0;right:0;bottom:.09em;height:.09em;
+  background:var(--gold);
+  transform:scaleX(0);transform-origin:left;
+  animation:underline 1s var(--ease-out) .9s forwards;
+  border-radius:4px;
+}
+@keyframes lineUp{to{transform:translateY(0)}}
+@keyframes underline{to{transform:scaleX(1)}}
+
+.hero__sub{
+  margin-top:22px;
+  font-size:clamp(1rem,2.6vw,1.18rem);
+  font-weight:500;color:var(--ink-2);
+  max-width:480px;margin-inline:auto;
+  opacity:0;animation:fadeUp .9s var(--ease-out) .55s forwards;
+}
+@media (min-width:900px){.hero__sub{margin-inline:0}}
+
+.hero__cta{
+  margin-top:34px;display:flex;flex-wrap:wrap;gap:12px;justify-content:center;
+  opacity:0;animation:fadeUp .9s var(--ease-out) .7s forwards;
+}
+@media (min-width:900px){.hero__cta{justify-content:flex-start}}
+
+.hero__meta{
+  margin-top:34px;
+  display:flex;flex-wrap:wrap;gap:10px 22px;justify-content:center;
+  font-size:13.5px;font-weight:600;color:var(--ink-2);
+  opacity:0;animation:fadeUp .9s var(--ease-out) .85s forwards;
+}
+@media (min-width:900px){.hero__meta{justify-content:flex-start}}
+.hero__meta span{display:inline-flex;align-items:center;gap:7px}
+.hero__meta svg{width:16px;height:16px;flex:none}
+
+.scroll-hint{
+  position:absolute;left:50%;bottom:26px;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+  font-size:10.5px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--ink-3);z-index:3;
+  opacity:0;animation:fadeUp 1s var(--ease-out) 1.2s forwards;
+}
+.scroll-hint__line{
+  width:1.5px;height:38px;background:linear-gradient(var(--ink-3),transparent);
+  position:relative;overflow:hidden;
+}
+.scroll-hint__line::after{
+  content:"";position:absolute;top:-38px;left:0;width:100%;height:38px;
+  background:var(--terra);
+  animation:scrollDot 2s var(--ease) infinite;
+}
+@keyframes scrollDot{0%{transform:translateY(0)}100%{transform:translateY(76px)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+/* ============================================================
+   BUTTONS
+============================================================ */
+.btn{
+  position:relative;
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  min-height:54px;padding:0 26px;border-radius:16px;
+  font-weight:800;font-size:15.5px;letter-spacing:-.01em;
+  overflow:hidden;
+  transition:transform .3s var(--ease),box-shadow .3s var(--ease),background .3s var(--ease);
+}
+.btn svg{width:19px;height:19px;flex:none;transition:transform .35s var(--ease)}
+.btn:hover svg{transform:translateX(2px)}
+.btn--primary{background:var(--terra);color:#fff;box-shadow:0 14px 30px -14px rgba(210,84,30,.75)}
+.btn--primary:hover{background:var(--terra-2);transform:translateY(-3px);box-shadow:0 22px 40px -16px rgba(210,84,30,.85)}
+.btn--ghost{
+  background:rgba(255,255,255,.7);color:var(--ink);
+  border:1.5px solid var(--line);
+  -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
+}
+.btn--ghost:hover{background:#fff;transform:translateY(-3px);box-shadow:var(--shadow-md)}
+.btn--forest{background:var(--forest);color:#fff;box-shadow:0 14px 30px -14px rgba(18,59,42,.7)}
+.btn--forest:hover{background:var(--forest-2);transform:translateY(-3px)}
+.btn--wa{background:#1FA855;color:#fff;box-shadow:0 14px 30px -14px rgba(31,168,85,.75)}
+.btn--wa:hover{background:#189247;transform:translateY(-3px)}
+.btn:active{transform:scale(.97) !important}
+.ripple{
+  position:absolute;border-radius:50%;pointer-events:none;
+  background:rgba(255,255,255,.5);
+  transform:scale(0);animation:rippleOut .65s var(--ease-out) forwards;
+}
+@keyframes rippleOut{to{transform:scale(3.2);opacity:0}}
+
+/* ============================================================
+   MARQUEE
+============================================================ */
+.marquee{
+  background:var(--forest);color:var(--bg);
+  padding:18px 0;overflow:hidden;position:relative;
+  border-top:1px solid rgba(255,255,255,.06);
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+.marquee::before,.marquee::after{
+  content:"";position:absolute;top:0;bottom:0;width:80px;z-index:2;pointer-events:none;
+}
+.marquee::before{left:0;background:linear-gradient(90deg,var(--forest),transparent)}
+.marquee::after{right:0;background:linear-gradient(-90deg,var(--forest),transparent)}
+.marquee__track{display:flex;width:max-content;animation:marquee 34s linear infinite}
+.marquee:hover .marquee__track{animation-play-state:paused}
+.marquee__group{display:flex;align-items:center;gap:34px;padding-right:34px}
+.marquee__item{
+  display:inline-flex;align-items:center;gap:14px;
+  font-family:'Fraunces',serif;font-size:17px;font-weight:600;letter-spacing:-.01em;
+  white-space:nowrap;color:rgba(251,246,236,.92);
+}
+.marquee__dot{width:6px;height:6px;border-radius:50%;background:var(--gold);flex:none}
+@keyframes marquee{to{transform:translateX(-50%)}}
+
+/* ============================================================
+   SECTION
+============================================================ */
+.section{padding:clamp(72px,10vw,120px) 0;position:relative}
+.section__head{max-width:640px;margin-bottom:44px}
+.section__head.center{margin-inline:auto;text-align:center}
+.section__title{
+  font-family:'Fraunces',serif;font-weight:900;
+  font-size:clamp(2rem,6vw,3.4rem);
+  line-height:1.02;letter-spacing:-.03em;margin-top:14px;
+}
+.section__lede{margin-top:14px;font-size:16px;font-weight:500;color:var(--ink-2)}
+
+/* ============================================================
+   REVEAL
+============================================================ */
+[data-reveal]{
+  opacity:0;transform:translateY(28px);
+  transition:opacity .9s var(--ease-out),transform .9s var(--ease-out);
+  transition-delay:var(--d,0s);
+}
+[data-reveal].in{opacity:1;transform:none}
+
+/* ============================================================
+   QR BANNER
+============================================================ */
+.qr-banner{
+  position:relative;display:grid;gap:30px;grid-template-columns:1fr;align-items:center;
+  padding:34px 28px;border-radius:30px;
+  background:
+    radial-gradient(120% 140% at 100% 0%, rgba(235,169,58,.22), transparent 55%),
+    linear-gradient(135deg,#123B2A,#1E5C40);
+  color:#FBF6EC;overflow:hidden;box-shadow:var(--shadow-lg);
+}
+@media (min-width:760px){.qr-banner{grid-template-columns:auto 1fr;padding:44px;gap:48px}}
+.qr-banner::before{
+  content:"";position:absolute;right:-90px;top:-90px;
+  width:280px;height:280px;border-radius:50%;
+  border:1.5px dashed rgba(235,169,58,.32);
+  animation:spin 50s linear infinite;
+}
+.qr-banner::after{
+  content:"";position:absolute;right:-40px;bottom:-110px;
+  width:220px;height:220px;border-radius:50%;
+  border:1.5px dotted rgba(251,246,236,.15);
+  animation:spin 40s linear infinite reverse;
+}
+.qr-banner>*{position:relative;z-index:1}
+.qr-wrap{
+  display:grid;place-items:center;padding:14px;border-radius:22px;background:#fff;
+  box-shadow:0 24px 50px -22px rgba(0,0,0,.6);
+  transition:transform .5s var(--ease);
+  width:max-content;margin-inline:auto;
+}
+.qr-wrap:hover{transform:translateY(-6px) rotate(-2deg)}
+.qr-wrap svg{border-radius:12px;width:clamp(140px,34vw,180px);height:auto}
+.qr-banner h3{
+  font-family:'Fraunces',serif;font-weight:900;
+  font-size:clamp(1.5rem,4vw,2.1rem);line-height:1.1;letter-spacing:-.02em;
+  margin-top:12px;
+}
+.qr-banner p{margin-top:12px;font-size:15px;color:rgba(251,246,236,.78);max-width:52ch}
+.qr-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:11px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--gold);
+}
+.qr-badge svg{width:15px;height:15px}
+
+/* ============================================================
+   MENU
+============================================================ */
+.tabs-sticky{
+  position:sticky;top:calc(var(--nav-h) + var(--safe-top));
+  z-index:400;padding:14px 0;margin-bottom:26px;
+  background:linear-gradient(180deg, var(--bg) 62%, rgba(251,246,236,0));
+}
+.tabs{
+  display:flex;gap:9px;overflow-x:auto;scrollbar-width:none;
+  padding:4px;margin:-4px;-webkit-overflow-scrolling:touch;
+}
+.tabs::-webkit-scrollbar{display:none}
+.tab{
+  display:inline-flex;align-items:center;gap:9px;flex:none;
+  min-height:46px;padding:0 18px;border-radius:999px;
+  background:#fff;border:1.5px solid var(--line);color:var(--ink-2);
+  font-size:14px;font-weight:700;white-space:nowrap;
+  transition:all .3s var(--ease);
+}
+.tab svg{width:17px;height:17px;transition:transform .35s var(--ease)}
+.tab:hover{border-color:var(--terra);color:var(--terra);transform:translateY(-2px)}
+.tab:hover svg{transform:rotate(-8deg) scale(1.1)}
+.tab[aria-selected="true"]{
+  background:var(--terra);border-color:var(--terra);color:#fff;
+  box-shadow:0 12px 26px -12px rgba(210,84,30,.75);
+}
+
+.dishes{display:grid;gap:16px;grid-template-columns:1fr}
+@media (min-width:720px){.dishes{grid-template-columns:1fr 1fr}}
+@media (min-width:1100px){.dishes{grid-template-columns:repeat(2,1fr);gap:20px}}
+
+.dish{
+  position:relative;display:grid;grid-template-columns:112px 1fr;gap:16px;
+  padding:14px;border-radius:var(--radius);background:var(--card);
+  border:1px solid var(--line-2);box-shadow:var(--shadow-sm);
+  transition:transform .45s var(--ease),box-shadow .45s var(--ease),border-color .45s var(--ease);
+}
+@media (min-width:720px){.dish{grid-template-columns:132px 1fr;gap:18px;padding:16px}}
+.dish:hover{box-shadow:var(--shadow-md);border-color:rgba(210,84,30,.28)}
+.dish__art{
+  position:relative;border-radius:16px;overflow:hidden;
+  aspect-ratio:1;align-self:start;
+}
+.dish__art img{width:100%;height:100%;object-fit:cover;transition:transform .7s var(--ease)}
+.dish:hover .dish__art img{transform:scale(1.09)}
+.dish__art::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(120deg,transparent 40%,rgba(255,255,255,.5) 50%,transparent 60%);
+  transform:translateX(-120%);transition:transform .9s var(--ease);
+}
+.dish:hover .dish__art::after{transform:translateX(120%)}
+.dish__body{display:flex;flex-direction:column;min-width:0}
+.dish__top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+.dish__name{font-size:15.5px;font-weight:800;line-height:1.25;letter-spacing:-.01em}
+.dish__desc{
+  margin-top:5px;font-size:13px;font-weight:500;color:var(--ink-2);line-height:1.45;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+}
+.dish__foot{
+  margin-top:auto;padding-top:12px;
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+}
+.dish__price{
+  font-family:'Fraunces',serif;font-weight:700;
+  font-size:19px;color:var(--terra);letter-spacing:-.02em;
+}
+
+.tag{
+  display:inline-flex;align-items:center;gap:5px;flex:none;
+  padding:4px 9px;border-radius:999px;font-size:10.5px;font-weight:800;letter-spacing:.03em;
+}
+.tag svg{width:11px;height:11px}
+.tag--sig{background:var(--gold-soft);color:#7A4E06}
+.tag--pop{background:var(--terra-soft);color:var(--terra-2)}
+.tag--hot{background:#FBE0DE;color:#9E2A22}
+.tag--fresh{background:var(--forest-soft);color:var(--forest-2)}
+
+.add-btn{
+  display:inline-flex;align-items:center;gap:7px;
+  height:42px;padding:0 16px;border-radius:999px;
+  background:var(--terra-soft);color:var(--terra-2);
+  font-size:13.5px;font-weight:800;
+  transition:all .3s var(--ease);
+}
+.add-btn svg{width:15px;height:15px;transition:transform .35s var(--ease)}
+.add-btn:hover{background:var(--terra);color:#fff;transform:translateY(-2px);box-shadow:0 10px 22px -10px rgba(210,84,30,.8)}
+.add-btn:hover svg{transform:rotate(90deg)}
+.add-btn:active{transform:scale(.94)}
+
+.stepper{
+  display:inline-flex;align-items:center;gap:2px;padding:3px;border-radius:999px;
+  background:var(--terra);box-shadow:0 10px 22px -12px rgba(210,84,30,.9);
+  animation:stepperIn .35s var(--ease-out);
+}
+@keyframes stepperIn{from{transform:scale(.7);opacity:0}to{transform:scale(1);opacity:1}}
+.stepper button{
+  display:grid;place-items:center;width:36px;height:36px;border-radius:50%;
+  color:#fff;transition:background .25s var(--ease),transform .25s var(--ease);
+}
+.stepper button:hover{background:rgba(255,255,255,.18)}
+.stepper button:active{transform:scale(.86)}
+.stepper svg{width:15px;height:15px}
+.stepper__qty{
+  min-width:28px;text-align:center;font-size:14.5px;font-weight:800;color:#fff;
+  font-variant-numeric:tabular-nums;
+}
+
+/* ============================================================
+   ABOUT (photo baobab réelle)
+============================================================ */
+.about{
+  background:linear-gradient(180deg,var(--bg) 0%, var(--bg-2) 100%);
+  border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  position:relative;overflow:hidden;
+}
+.about__grid{
+  display:grid;gap:44px;align-items:center;grid-template-columns:1fr;
+}
+@media (min-width:900px){.about__grid{grid-template-columns:1.05fr 1fr;gap:64px}}
+
+.about__visual{
+  position:relative;border-radius:28px;overflow:hidden;
+  aspect-ratio:4/3.2;box-shadow:var(--shadow-lg);
+  background:#2A1A10;
+}
+.about__visual img{
+  width:100%;height:100%;object-fit:cover;display:block;
+  transition:transform 1.2s var(--ease);
+}
+.about__visual:hover img{transform:scale(1.05)}
+.about__visual::after{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:
+    linear-gradient(180deg, rgba(28,20,16,0) 40%, rgba(28,20,16,.55) 100%),
+    radial-gradient(120% 80% at 80% 10%, rgba(235,169,58,.25), transparent 60%);
+}
+
+.about__float{
+  position:absolute;display:flex;align-items:center;gap:10px;
+  padding:11px 15px;border-radius:16px;
+  background:rgba(255,255,255,.94);
+  -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+  box-shadow:var(--shadow-md);
+  font-size:12.5px;font-weight:800;
+  animation:floaty 5s ease-in-out infinite;
+  z-index:2;
+}
+.about__float svg{width:17px;height:17px;color:var(--terra)}
+.about__float--1{left:16px;top:16px}
+.about__float--2{right:16px;bottom:16px;animation-delay:-2.5s}
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+
+.about__text p{color:var(--ink-2);font-size:16px;line-height:1.7}
+.about__text p+p{margin-top:14px}
+
+.feature-grid{margin-top:32px;display:grid;gap:12px;grid-template-columns:1fr 1fr}
+@media (max-width:420px){.feature-grid{grid-template-columns:1fr}}
+.feature{
+  display:flex;gap:12px;align-items:flex-start;
+  padding:16px;border-radius:16px;background:#fff;border:1px solid var(--line-2);
+  transition:transform .35s var(--ease),box-shadow .35s var(--ease);
+}
+.feature:hover{transform:translateY(-4px);box-shadow:var(--shadow-md)}
+.feature__ico{
+  display:grid;place-items:center;flex:none;
+  width:40px;height:40px;border-radius:12px;
+  background:var(--forest-soft);color:var(--forest-2);
+  transition:transform .4s var(--ease);
+}
+.feature:hover .feature__ico{transform:rotate(-8deg) scale(1.08)}
+.feature__ico svg{width:19px;height:19px}
+.feature b{display:block;font-size:13.5px;font-weight:800;line-height:1.3}
+.feature span{display:block;font-size:12.5px;color:var(--ink-2);margin-top:2px;line-height:1.4}
+
+/* ============================================================
+   INFO CARDS
+============================================================ */
+.info-grid{display:grid;gap:16px;grid-template-columns:1fr}
+@media (min-width:700px){.info-grid{grid-template-columns:repeat(3,1fr)}}
+
+.info-card{
+  position:relative;padding:26px 24px;border-radius:24px;background:#fff;
+  border:1px solid var(--line-2);box-shadow:var(--shadow-sm);overflow:hidden;
+  transition:transform .4s var(--ease),box-shadow .4s var(--ease);
+}
+.info-card::before{
+  content:"";position:absolute;left:0;top:0;height:3px;width:100%;
+  background:linear-gradient(90deg,var(--terra),var(--gold));
+  transform:scaleX(0);transform-origin:left;transition:transform .5s var(--ease);
+}
+.info-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-md)}
+.info-card:hover::before{transform:scaleX(1)}
+.info-card__ico{
+  display:grid;place-items:center;width:48px;height:48px;border-radius:14px;
+  margin-bottom:16px;transition:transform .4s var(--ease);
+}
+.info-card:hover .info-card__ico{transform:rotate(-10deg) scale(1.1)}
+.info-card__ico svg{width:22px;height:22px}
+.info-card__ico--terra{background:var(--terra-soft);color:var(--terra)}
+.info-card__ico--forest{background:var(--forest-soft);color:var(--forest-2)}
+.info-card__ico--gold{background:var(--gold-soft);color:#8A5A08}
+.info-card h3{font-size:17px;font-weight:800;letter-spacing:-.01em}
+.info-card p{margin-top:8px;font-size:14px;color:var(--ink-2);line-height:1.6}
+.info-card strong{color:var(--ink);font-weight:800}
+.info-card .mini-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.mini-btn{
+  display:inline-flex;align-items:center;gap:7px;
+  min-height:42px;padding:0 15px;border-radius:999px;
+  font-size:13px;font-weight:800;transition:all .3s var(--ease);
+}
+.mini-btn svg{width:15px;height:15px}
+.mini-btn--forest{background:var(--forest-soft);color:var(--forest-2)}
+.mini-btn--forest:hover{background:var(--forest);color:#fff;transform:translateY(-2px)}
+.mini-btn--wa{background:#1FA855;color:#fff}
+.mini-btn--wa:hover{background:#189247;transform:translateY(-2px);box-shadow:0 12px 24px -12px rgba(31,168,85,.8)}
+.mini-btn--ghost{background:rgba(28,20,16,.05);color:var(--ink);border:1px solid var(--line)}
+.mini-btn--ghost:hover{background:rgba(28,20,16,.09);transform:translateY(-2px)}
+
+/* ============================================================
+   FOOTER
+============================================================ */
+.footer{
+  position:relative;background:var(--forest);color:#FBF6EC;
+  padding:64px 0 calc(48px + var(--safe-bot));overflow:hidden;
+}
+.footer::before{
+  content:"";position:absolute;left:-100px;bottom:-140px;
+  width:340px;height:340px;border-radius:50%;
+  background:radial-gradient(circle,rgba(235,169,58,.14),transparent 70%);
+}
+.footer__inner{position:relative;z-index:1;display:grid;gap:34px;text-align:center;justify-items:center}
+.footer__brand{display:flex;align-items:center;gap:12px}
+.footer__brand svg{width:44px;height:44px}
+.footer__brand b{font-family:'Fraunces',serif;font-weight:900;font-size:22px;letter-spacing:-.02em}
+.footer__brand em{color:var(--gold);font-style:normal}
+.footer__tag{font-size:14px;color:rgba(251,246,236,.6);max-width:44ch}
+.footer__links{display:flex;flex-wrap:wrap;gap:6px;justify-content:center}
+.footer__links a{
+  padding:9px 15px;border-radius:999px;font-size:13.5px;font-weight:700;
+  color:rgba(251,246,236,.7);transition:all .3s var(--ease);
+}
+.footer__links a:hover{background:rgba(255,255,255,.08);color:#fff;transform:translateY(-2px)}
+.footer__rule{width:min(420px,100%);height:1px;background:rgba(255,255,255,.1)}
+.footer__credit{font-size:13px;font-weight:600;color:rgba(251,246,236,.78)}
+.footer__credit a{color:var(--gold);text-decoration:underline;text-underline-offset:3px}
+.footer__note{font-size:11.5px;color:rgba(251,246,236,.42);max-width:52ch;line-height:1.6}
+.footer__phone{
+  display:inline-flex;align-items:center;gap:9px;
+  padding:10px 18px;border-radius:999px;
+  background:rgba(255,255,255,.08);
+  font-size:14px;font-weight:800;letter-spacing:.01em;
+  color:#FBF6EC;
+  transition:background .3s var(--ease),transform .3s var(--ease);
+}
+.footer__phone:hover{background:rgba(255,255,255,.16);transform:translateY(-2px)}
+.footer__phone svg{width:16px;height:16px;color:var(--gold)}
+
+/* ============================================================
+   FLOATING CART BAR
+============================================================ */
+.cart-bar{
+  position:fixed;left:16px;right:16px;bottom:calc(16px + var(--safe-bot));
+  z-index:800;max-width:460px;margin-inline:auto;
+  display:flex;align-items:center;justify-content:space-between;gap:14px;
+  min-height:60px;padding:0 20px;border-radius:20px;
+  background:var(--ink);color:#fff;
+  box-shadow:0 22px 44px -18px rgba(28,20,16,.7);
+  transform:translateY(140%);transition:transform .5s var(--ease-out);
+}
+.cart-bar.show{transform:translateY(0)}
+.cart-bar:hover{transform:translateY(-3px)}
+.cart-bar__left{display:inline-flex;align-items:center;gap:11px;font-size:14.5px;font-weight:800}
+.cart-bar__left svg{width:20px;height:20px}
+.cart-bar__bubble{
+  display:grid;place-items:center;min-width:26px;height:26px;padding:0 7px;
+  border-radius:999px;background:var(--terra);font-size:12.5px;font-weight:800;
+}
+.cart-bar__total{
+  font-family:'Fraunces',serif;font-size:19px;font-weight:700;color:var(--gold);
+  letter-spacing:-.02em;
+}
+
+/* ============================================================
+   DRAWER
+============================================================ */
+.overlay{
+  position:fixed;inset:0;z-index:950;
+  background:rgba(28,20,16,.5);
+  -webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);
+  opacity:0;pointer-events:none;transition:opacity .35s var(--ease);
+}
+.overlay.show{opacity:1;pointer-events:auto}
+
+.drawer{
+  position:fixed;top:0;right:0;bottom:0;z-index:960;
+  width:min(460px,100%);display:flex;flex-direction:column;
+  background:var(--bg);box-shadow:-30px 0 80px -30px rgba(28,20,16,.5);
+  transform:translateX(102%);transition:transform .45s var(--ease-out);
+  padding-top:var(--safe-top);
+}
+.drawer.open{transform:translateX(0)}
+
+.drawer__head{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:20px 22px;border-bottom:1px solid var(--line);
+}
+.drawer__title{font-family:'Fraunces',serif;font-weight:900;font-size:22px;letter-spacing:-.02em}
+.drawer__close{
+  display:grid;place-items:center;width:44px;height:44px;border-radius:50%;
+  background:rgba(28,20,16,.06);transition:background .3s var(--ease),transform .3s var(--ease);
+}
+.drawer__close:hover{background:rgba(28,20,16,.12);transform:rotate(90deg)}
+.drawer__close svg{width:19px;height:19px}
+
+.drawer__body{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:8px 22px}
+.drawer__empty{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;gap:12px;padding:60px 20px;height:100%;
+}
+.drawer__empty-ico{
+  display:grid;place-items:center;width:88px;height:88px;border-radius:50%;
+  background:var(--terra-soft);color:var(--terra);
+  animation:floaty 3.6s ease-in-out infinite;
+}
+.drawer__empty-ico svg{width:38px;height:38px}
+.drawer__empty b{font-family:'Fraunces',serif;font-size:21px;font-weight:900}
+.drawer__empty p{font-size:14px;color:var(--ink-2);max-width:30ch}
+
+.cart-item{
+  display:grid;grid-template-columns:64px 1fr;gap:14px;
+  padding:18px 0;border-bottom:1px solid var(--line);
+  animation:itemIn .4s var(--ease-out);
+}
+@keyframes itemIn{from{opacity:0;transform:translateX(16px)}to{opacity:1;transform:none}}
+.cart-item__art{width:64px;height:64px;border-radius:14px;overflow:hidden}
+.cart-item__art img{width:100%;height:100%;object-fit:cover}
+.cart-item__body{display:flex;flex-direction:column;min-width:0}
+.cart-item__top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+.cart-item__name{font-size:14.5px;font-weight:800;line-height:1.3}
+.cart-item__unit{font-size:12px;color:var(--ink-3);margin-top:3px;font-weight:600}
+.cart-item__remove{
+  display:grid;place-items:center;width:32px;height:32px;border-radius:50%;
+  color:var(--ink-3);flex:none;transition:all .25s var(--ease);
+}
+.cart-item__remove:hover{background:rgba(210,84,30,.12);color:var(--terra);transform:rotate(90deg)}
+.cart-item__remove svg{width:15px;height:15px}
+.cart-item__bottom{
+  margin-top:10px;display:flex;align-items:center;justify-content:space-between;gap:10px;
+}
+.stepper--light{background:rgba(28,20,16,.06);box-shadow:none}
+.stepper--light button{color:var(--ink);background:#fff;width:32px;height:32px;box-shadow:var(--shadow-sm)}
+.stepper--light button:hover{background:#fff;transform:scale(1.06)}
+.stepper--light .stepper__qty{color:var(--ink);min-width:24px}
+.cart-item__price{
+  font-family:'Fraunces',serif;font-weight:700;font-size:16px;color:var(--terra);
+}
+
+.drawer__foot{
+  padding:20px 22px calc(20px + var(--safe-bot));
+  border-top:1px solid var(--line);background:#fff;
+}
+.drawer__total{
+  display:flex;align-items:baseline;justify-content:space-between;gap:12px;
+  margin-bottom:6px;
+}
+.drawer__total span{font-size:14px;font-weight:700;color:var(--ink-2)}
+.drawer__total b{font-family:'Fraunces',serif;font-weight:900;font-size:28px;letter-spacing:-.03em}
+.drawer__note{font-size:12px;color:var(--ink-3);margin-bottom:14px}
+.drawer__continue{
+  display:block;width:100%;margin-top:8px;min-height:44px;
+  font-size:14px;font-weight:800;color:var(--terra);
+  transition:opacity .25s var(--ease);
+}
+.drawer__continue:hover{opacity:.75}
+
+/* ============================================================
+   TOAST
+============================================================ */
+.toast{
+  position:fixed;left:50%;bottom:calc(96px + var(--safe-bot));
+  z-index:980;transform:translate(-50%,20px);
+  max-width:min(440px,calc(100vw - 32px));
+  padding:13px 20px;border-radius:16px;background:var(--ink);color:#fff;
+  font-size:13.5px;font-weight:700;text-align:center;
+  box-shadow:var(--shadow-lg);
+  opacity:0;pointer-events:none;
+  transition:opacity .35s var(--ease),transform .35s var(--ease-out);
+}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+
+/* ============================================================
+   REDUCED MOTION
+============================================================ */
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{
+    animation-duration:.001ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.001ms !important;
+    scroll-behavior:auto !important;
+  }
+  [data-reveal]{opacity:1 !important;transform:none !important}
+  .hero__title .line>span{transform:none !important}
+  .hero__title em::after{transform:scaleX(1) !important}
+  .hero__badge,.hero__sub,.hero__cta,.hero__meta,.scroll-hint{opacity:1 !important}
+  .baobab{animation:none !important}
+}
+</style>
+</head>
+<body>
+
+<a class="skip" href="#menu">Aller au menu</a>
+<div class="grain" aria-hidden="true"></div>
+<div class="progress" aria-hidden="true"><div class="progress__bar" id="progressBar"></div></div>
+
+<!-- ============ HEADER ============ -->
+<header class="header" id="header">
+  <div class="wrap nav">
+    <a href="#top" class="brand" aria-label="Le Baobab Gourmand — retour en haut">
+      <svg class="brand__mark" viewBox="0 0 48 48" aria-hidden="true">
+        <circle cx="24" cy="24" r="23" fill="#D2541E"/>
+        <g stroke="#FBF6EC" stroke-width="3.4" stroke-linecap="round" fill="none">
+          <path d="M24 39V21"/>
+          <path d="M24 23 14.5 12"/>
+          <path d="M24 23V9"/>
+          <path d="M24 23 33.5 12"/>
+        </g>
+        <path d="M16.5 39h15" stroke="#FBF6EC" stroke-width="3.4" stroke-linecap="round"/>
+      </svg>
+      <span class="brand__name">Le Baobab <em>Gourmand</em></span>
+    </a>
+
+    <nav class="nav__links" aria-label="Navigation principale">
+      <a class="nav__link" href="#menu" data-nav="menu">Menu</a>
+      <a class="nav__link" href="#histoire" data-nav="histoire">Notre histoire</a>
+      <a class="nav__link" href="#infos" data-nav="infos">Infos pratiques</a>
+    </nav>
+
+    <button class="cart-btn" id="cartBtn" aria-label="Ouvrir le panier">
+      <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/>
+        <path d="M3 6h18"/>
+        <path d="M16 10a4 4 0 0 1-8 0"/>
+      </svg>
+      <span class="cart-btn__label">Panier</span>
+      <span class="cart-btn__count" id="cartCount" aria-hidden="true">0</span>
+    </button>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero" aria-label="Présentation">
+    <div class="hero__bg" aria-hidden="true"></div>
+    <div class="hero__spot" id="heroSpot" aria-hidden="true"></div>
+
+    <div class="sun" aria-hidden="true">
+      <div class="sun__disc"></div>
+      <div class="sun__ring"></div>
+      <div class="sun__ring"></div>
+    </div>
+
+    <!-- VRAI BAOBAB (photo) -->
+    <div class="baobab" id="baobab" aria-hidden="true"></div>
+
+    <div class="wrap hero__content">
+      <span class="hero__badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M20 10c0 4.99-5.54 10.19-7.4 11.8a1 1 0 0 1-1.2 0C9.54 20.19 4 14.99 4 10a8 8 0 0 1 16 0"/>
+          <circle cx="12" cy="10" r="3"/>
+        </svg>
+        Cotonou · Bénin
+      </span>
+
+      <h1 class="hero__title">
+        <span class="line"><span>Le Baobab</span></span>
+        <span class="line"><span><em>Gourmand</em></span></span>
+      </h1>
+
+      <p class="hero__sub">
+        La vraie cuisine béninoise, mijotée au feu de bois, servie avec le sourire — à deux pas de la plage de Fidjrossè.
+      </p>
+
+      <div class="hero__cta">
+        <a href="#menu" class="btn btn--primary">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="m16 2-2.3 2.3a3 3 0 0 0 0 4.2l1.8 1.8a3 3 0 0 0 4.2 0L22 8"/>
+            <path d="M15 15 3.3 3.3a4.2 4.2 0 0 0 0 6l7.3 7.3c.7.7 2 .7 2.8 0L15 15Zm0 0 7 7"/>
+          </svg>
+          Découvrir le menu
+        </a>
+        <a href="#infos" class="btn btn--ghost">
+          Nous trouver
+        </a>
+      </div>
+
+      <div class="hero__meta">
+        <span>
+          <svg viewBox="0 0 24 24" fill="#EBA93A" stroke="#EBA93A" stroke-width="1.4" stroke-linejoin="round" aria-hidden="true">
+            <path d="M11.5 2.3a.53.53 0 0 1 .95 0l2.31 4.68a2.12 2.12 0 0 0 1.6 1.16l5.16.76a.53.53 0 0 1 .3.9l-3.74 3.64a2.12 2.12 0 0 0-.61 1.88l.88 5.14a.53.53 0 0 1-.77.56l-4.62-2.43a2.12 2.12 0 0 0-1.97 0L6.4 21.02a.53.53 0 0 1-.77-.56l.88-5.14a2.12 2.12 0 0 0-.61-1.88L2.16 9.8a.53.53 0 0 1 .29-.9l5.17-.76a2.12 2.12 0 0 0 1.6-1.16z"/>
+          </svg>
+          4,8/5 · 320 avis
+        </span>
+        <span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="#1E5C40" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="18.5" cy="17.5" r="3.5"/><circle cx="5.5" cy="17.5" r="3.5"/>
+            <circle cx="15" cy="5" r="1"/><path d="M12 17.5V14l-3-3 4-3 2 3h2"/>
+          </svg>
+          Livraison Cotonou
+        </span>
+        <span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="#D2541E" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+          </svg>
+          Ouvert 7j/7
+        </span>
+      </div>
+    </div>
+
+    <div class="scroll-hint" aria-hidden="true">
+      <span>Défiler</span>
+      <span class="scroll-hint__line"></span>
+    </div>
+  </section>
+
+  <!-- ============ MARQUEE ============ -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee__track">
+      <div class="marquee__group">
+        <span class="marquee__item"><span class="marquee__dot"></span>Cuisine béninoise</span>
+        <span class="marquee__item"><span class="marquee__dot"></span>Feu de bois</span>
+        <span class="marquee__item"><span class="marquee__dot"></span>Fait maison</span>
+        <span class="marquee__item"><span class="marquee__dot"></span>Produits du marché</span>
+        <span class="marquee__item"><span class="marquee__dot"></span>Depuis 2018</span>
+        <span class="marquee__item"><span class="marquee__dot"></span>Commande WhatsApp</span>
+      </div>
+      <div class="marquee__group">
+        <span class="marquee__item"><span class="marquee__dot"></span>Cuisine béninoise</span>
+        <span class="marquee__item"><span class="marquee__dot"></span>Feu de bois</span>
+        <span class="marquee__item"><span class="marquee__dot"></span>Fait maison</span>
+        <span class="marquee__item"><span class="marquee__dot"></span>Produits du marché</span>
+        <span class="marquee__item"><span class="marquee__dot"></span>Depuis 2018</span>
+        <span class="marquee__item"><span class="marquee__dot"></span>Commande WhatsApp</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ MENU ============ -->
+  <section class="section" id="menu" aria-label="Menu numérique">
+    <div class="wrap">
+      <div class="section__head center" data-reveal>
+        <span class="eyebrow" style="color:var(--terra)">Notre carte</span>
+        <h2 class="section__title">Choisissez, on s'occupe du reste</h2>
+        <p class="section__lede">Ajoutez vos plats au panier, puis envoyez la commande sur WhatsApp. Simple, rapide, sans application.</p>
+      </div>
+
+      <div class="tabs-sticky">
+        <div class="tabs" role="tablist" aria-label="Catégories du menu" id="tabs"></div>
+      </div>
+
+      <div class="dishes" id="dishes" role="tabpanel" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <!-- ============ QR BANNER ============ -->
+  <section class="section" style="padding-top:0" aria-label="QR code">
+    <div class="wrap">
+      <div class="qr-banner" data-reveal>
+        <div class="qr-wrap" id="qrWrap" aria-hidden="true"></div>
+        <div>
+          <span class="qr-badge">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect width="5" height="5" x="3" y="3" rx="1"/><rect width="5" height="5" x="16" y="3" rx="1"/>
+              <rect width="5" height="5" x="3" y="16" rx="1"/><path d="M21 16h-3a2 2 0 0 0-2 2v3"/>
+              <path d="M21 21v.01"/><path d="M12 7v3a2 2 0 0 1-2 2H7"/>
+              <path d="M3 12h.01"/><path d="M12 3h.01"/><path d="M12 16v.01"/>
+            </svg>
+            Scannez pour voir le menu
+          </span>
+          <h3>La carte, directement dans la poche de vos clients</h3>
+          <p>Posez ce QR code sur vos tables. Vos clients consultent le menu, composent leur commande et vous l'envoient sur WhatsApp — sans rien installer.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ABOUT (photo réelle de baobab) ============ -->
+  <section class="section about" id="histoire" aria-label="À propos">
+    <div class="wrap about__grid">
+      <div class="about__visual" data-reveal>
+        <img
+          src="https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?q=80&w=1600&auto=format&fit=crop"
+          alt="Allée de baobabs au coucher du soleil — symbole du Baobab Gourmand"
+          loading="lazy">
+        <div class="about__float about__float--1">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M7 21h10"/><path d="M12 21a9 9 0 0 0 9-9H3a9 9 0 0 0 9 9Z"/>
+          </svg>
+          Fait maison
+        </div>
+        <div class="about__float about__float--2">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.07-2.14-.22-4.05 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.15.43-2.29 1-3a2.5 2.5 0 0 0 2.5 2.5"/>
+          </svg>
+          Feu de bois
+        </div>
+      </div>
+
+      <div class="about__text" data-reveal style="--d:.12s">
+        <span class="eyebrow" style="color:var(--terra)">Notre histoire</span>
+        <h2 class="section__title">Une table chaleureuse au cœur de Fidjrossè</h2>
+        <p style="margin-top:20px">
+          Depuis <strong>2018</strong>, Le Baobab Gourmand célèbre la cuisine béninoise dans un cadre ombragé, à deux pas de la plage. Chaque plat est préparé le matin même avec les produits frais du marché de Cotonou.
+        </p>
+        <p>
+          Poulet DG, poisson braisé au feu de bois, jus de bissap glacé… Ici on mange généreux, on rit fort, et on revient.
+        </p>
+
+        <div class="feature-grid">
+          <div class="feature">
+            <span class="feature__ico">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/>
+              </svg>
+            </span>
+            <span><b>Produits frais</b><span>Marché de Cotonou, chaque matin</span></span>
+          </div>
+          <div class="feature">
+            <span class="feature__ico">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.07-2.14-.22-4.05 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.15.43-2.29 1-3a2.5 2.5 0 0 0 2.5 2.5"/>
+              </svg>
+            </span>
+            <span><b>Cuisine au feu de bois</b><span>Le vrai goût des grillades</span></span>
+          </div>
+          <div class="feature">
+            <span class="feature__ico">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/>
+              </svg>
+            </span>
+            <span><b>Commande WhatsApp</b><span>Simple, sans application</span></span>
+          </div>
+          <div class="feature">
+            <span class="feature__ico">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="18.5" cy="17.5" r="3.5"/><circle cx="5.5" cy="17.5" r="3.5"/>
+                <circle cx="15" cy="5" r="1"/><path d="M12 17.5V14l-3-3 4-3 2 3h2"/>
+              </svg>
+            </span>
+            <span><b>Livraison rapide</b><span>Partout à Cotonou en 45 min</span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ INFOS ============ -->
+  <section class="section" id="infos" aria-label="Informations pratiques">
+    <div class="wrap">
+      <div class="section__head center" data-reveal>
+        <span class="eyebrow" style="color:var(--terra)">Infos pratiques</span>
+        <h2 class="section__title">On vous attend</h2>
+        <p class="section__lede">À table, à emporter ou en livraison — comme vous préférez.</p>
+      </div>
+
+      <div class="info-grid">
+        <article class="info-card" data-reveal>
+          <div class="info-card__ico info-card__ico--terra">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+            </svg>
+          </div>
+          <h3>Horaires</h3>
+          <p>Tous les jours<br><strong>11h30 – 23h00</strong><br>Cuisine ouverte jusqu'à 22h30</p>
+        </article>
+
+        <article class="info-card" data-reveal style="--d:.1s">
+          <div class="info-card__ico info-card__ico--forest">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M20 10c0 4.99-5.54 10.19-7.4 11.8a1 1 0 0 1-1.2 0C9.54 20.19 4 14.99 4 10a8 8 0 0 1 16 0"/>
+              <circle cx="12" cy="10" r="3"/>
+            </svg>
+          </div>
+          <h3>Adresse</h3>
+          <p>Carrefour Fidjrossè<br>Route des Plages<br>Cotonou — Bénin</p>
+          <div class="mini-actions">
+            <a class="mini-btn mini-btn--forest" href="https://www.google.com/maps/search/?api=1&query=Fidjross%C3%A8+Cotonou+B%C3%A9nin" target="_blank" rel="noopener noreferrer">
+              Voir sur la carte
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="m9 18 6-6-6-6"/>
+              </svg>
+            </a>
+          </div>
+        </article>
+
+        <article class="info-card" data-reveal style="--d:.2s">
+          <div class="info-card__ico info-card__ico--gold">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/>
+            </svg>
+          </div>
+          <h3>Contact</h3>
+          <p>WhatsApp &amp; réservations<br><strong id="phoneDisplay">+229 53 86 20 86</strong></p>
+          <div class="mini-actions">
+            <a class="mini-btn mini-btn--wa" id="contactWaBtn" href="#" target="_blank" rel="noopener noreferrer">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/>
+              </svg>
+              WhatsApp
+            </a>
+            <a class="mini-btn mini-btn--ghost" id="contactCallBtn" href="tel:+22953862086">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+              </svg>
+              Appeler
+            </a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="wrap footer__inner">
+    <div class="footer__brand">
+      <svg viewBox="0 0 48 48" aria-hidden="true">
+        <circle cx="24" cy="24" r="23" fill="#D2541E"/>
+        <g stroke="#FBF6EC" stroke-width="3.4" stroke-linecap="round" fill="none">
+          <path d="M24 39V21"/><path d="M24 23 14.5 12"/><path d="M24 23V9"/><path d="M24 23 33.5 12"/>
+        </g>
+        <path d="M16.5 39h15" stroke="#FBF6EC" stroke-width="3.4" stroke-linecap="round"/>
+      </svg>
+      <b>Le Baobab <em>Gourmand</em></b>
+    </div>
+    <p class="footer__tag">La vraie cuisine béninoise, servie avec le sourire — Fidjrossè, Cotonou.</p>
+
+    <a class="footer__phone" id="footerPhone" href="tel:+22953862086">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+      </svg>
+      +229 53 86 20 86
+    </a>
+
+    <nav class="footer__links" aria-label="Pied de page">
+      <a href="#menu">Menu</a>
+      <a href="#histoire">Notre histoire</a>
+      <a href="#infos">Infos pratiques</a>
+      <a id="footerWaBtn" href="#" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+    </nav>
+
+    <div class="footer__rule"></div>
+
+    <p class="footer__credit">Démo conçue par <a href="#top">[Ton Nom]</a> — Menus numériques pour restaurants</p>
+    <p class="footer__note">Le Baobab Gourmand est un restaurant fictif créé pour cette démonstration commerciale. Prix en francs CFA, à titre indicatif.</p>
+  </div>
+</footer>
+
+<!-- ============ FLOATING CART BAR ============ -->
+<button class="cart-bar" id="cartBar" aria-label="Voir le panier">
+  <span class="cart-bar__left">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/>
+      <path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/>
+    </svg>
+    <span class="cart-bar__bubble" id="barCount">0</span>
+    <span>Voir le panier</span>
+  </span>
+  <span class="cart-bar__total" id="barTotal">0 F</span>
+</button>
+
+<!-- ============ OVERLAY + DRAWER ============ -->
+<div class="overlay" id="overlay" hidden></div>
+
+<aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="drawerTitle" hidden>
+  <div class="drawer__head">
+    <h2 class="drawer__title" id="drawerTitle">Votre commande</h2>
+    <button class="drawer__close" id="drawerClose" aria-label="Fermer le panier">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M18 6 6 18"/><path d="m6 6 12 12"/>
+      </svg>
+    </button>
+  </div>
+  <div class="drawer__body" id="drawerBody"></div>
+  <div class="drawer__foot" id="drawerFoot" hidden>
+    <div class="drawer__total">
+      <span>Total</span>
+      <b id="drawerTotal">0 F</b>
+    </div>
+    <p class="drawer__note">Paiement à la livraison ou sur place.</p>
+    <a class="btn btn--wa" id="waLink" href="#" target="_blank" rel="noopener noreferrer" style="width:100%">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/>
+      </svg>
+      Commander via WhatsApp
+    </a>
+    <button class="drawer__continue" id="continueShopping">Continuer mes achats</button>
+  </div>
+</aside>
+
+<!-- ============ TOAST ============ -->
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+/* ============================================================
+   DONNÉES
+============================================================ */
+const RESTAURANT = {
+  name: 'Le Baobab Gourmand',
+  phone: '22953862086',
+  phoneDisplay: '+229 53 86 20 86'
+};
+
+/* Photos de plats (vraies images culinaires) */
+const DISH_IMAGES = {
+  accara:        'https://images.unsplash.com/photo-1601050690597-df0568f70950?q=80&w=600&auto=format&fit=crop',
+  pastels:       'https://images.unsplash.com/photo-1604467794349-0b74285de7e7?q=80&w=600&auto=format&fit=crop',
+  'salade-avocat':'https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?q=80&w=600&auto=format&fit=crop',
+  'soupe-poisson':'https://images.unsplash.com/photo-1547592180-85f173990554?q=80&w=600&auto=format&fit=crop',
+  'poulet-dg':   'https://images.unsplash.com/photo-1598103442097-8b74394b95c6?q=80&w=600&auto=format&fit=crop',
+  'sauce-arachide':'https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?q=80&w=600&auto=format&fit=crop',
+  'poisson-braise':'https://images.unsplash.com/photo-1580476262798-bddd9f4b7369?q=80&w=600&auto=format&fit=crop',
+  ndole:         'https://images.unsplash.com/photo-1574484284002-952d92456975?q=80&w=600&auto=format&fit=crop',
+  'riz-tomate':  'https://images.unsplash.com/photo-1512058564366-18510be2db19?q=80&w=600&auto=format&fit=crop',
+  brochettes:    'https://images.unsplash.com/photo-1529193591184-b1d58069ecdd?q=80&w=600&auto=format&fit=crop',
+  'poulet-entier':'https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?q=80&w=600&auto=format&fit=crop',
+  capitaine:     'https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?q=80&w=600&auto=format&fit=crop',
+  ailes:         'https://images.unsplash.com/photo-1608039755401-742074f0548d?q=80&w=600&auto=format&fit=crop',
+  bissap:        'https://images.unsplash.com/photo-1546171753-97d7676e4602?q=80&w=600&auto=format&fit=crop',
+  gingembre:     'https://images.unsplash.com/photo-1613478223719-2ab802602423?q=80&w=600&auto=format&fit=crop',
+  biere:         'https://images.unsplash.com/photo-1618183479302-1e0aa382c36b?q=80&w=600&auto=format&fit=crop',
+  eau:           'https://images.unsplash.com/photo-1616118132534-381148898bb4?q=80&w=600&auto=format&fit=crop',
+  thiakry:       'https://images.unsplash.com/photo-1488477181946-6428a0291777?q=80&w=600&auto=format&fit=crop',
+  'salade-fruits':'https://images.unsplash.com/photo-1610832958506-aa56368176cf?q=80&w=600&auto=format&fit=crop',
+  'beignets-banane':'https://images.unsplash.com/photo-1620921575116-fb8902865b1e?q=80&w=600&auto=format&fit=crop'
+};
+
+const MENU = [
+  {
+    id: 'entrees', label: 'Entrées', icon: 'salad',
+    items: [
+      { id:'accara', name:'Accara croustillants', desc:'Beignets de haricot cornille, sauce pimentée douce.', price:1000, tag:'pop' },
+      { id:'pastels', name:'Pastels farcis (x4)', desc:'Chaussons dorés farcis au poisson, oignons caramélisés.', price:1500 },
+      { id:'salade-avocat', name:'Salade d\'avocat aux crevettes', desc:'Avocat crémeux, crevettes sautées, vinaigrette au citron.', price:2500 },
+      { id:'soupe-poisson', name:'Soupe de poisson maison', desc:'Bouillon parfumé, poisson frais du marché, piment doux.', price:2000 }
+    ]
+  },
+  {
+    id: 'plats', label: 'Plats', icon: 'plate',
+    items: [
+      { id:'poulet-dg', name:'Poulet DG', desc:'Le classique : poulet fermier, plantains mûrs, légumes sautés.', price:4500, tag:'sig' },
+      { id:'sauce-arachide', name:'Sauce arachide & riz', desc:'Sauce onctueuse à la pâte d\'arachide, riz parfumé.', price:3500 },
+      { id:'poisson-braise', name:'Poisson braisé & attiéké', desc:'Capitaine braisé au feu de bois, attiéké, oignons confits.', price:5000, tag:'pop' },
+      { id:'ndole', name:'Ndolé aux crevettes', desc:'Feuilles de ndolé, pâte d\'arachide, crevettes, plantains.', price:4000 },
+      { id:'riz-tomate', name:'Riz sauce tomate au bœuf', desc:'Riz parfumé, bœuf fondant mijoté à la tomate.', price:3000 }
+    ]
+  },
+  {
+    id: 'grillades', label: 'Grillades', icon: 'flame',
+    items: [
+      { id:'brochettes', name:'Brochettes de bœuf mariné', desc:'Marinade aux épices, grillées à la braise, frites maison.', price:3000, tag:'pop' },
+      { id:'poulet-entier', name:'Poulet braisé entier', desc:'Poulet fermier mariné 24 h, braisé lentement. Pour 2 à 3 personnes.', price:8000 },
+      { id:'capitaine', name:'Capitaine grillé', desc:'Pêché du jour, grillé au feu de bois, sauce piment.', price:6500 },
+      { id:'ailes', name:'Ailes de poulet grillées', desc:'Laquées au miel et piment doux, ultra croustillantes.', price:2500, tag:'hot' }
+    ]
+  },
+  {
+    id: 'boissons', label: 'Boissons', icon: 'drink',
+    items: [
+      { id:'bissap', name:'Jus de bissap glacé', desc:'Fleurs d\'hibiscus, menthe fraîche, juste ce qu\'il faut de sucre.', price:1000, tag:'fresh' },
+      { id:'gingembre', name:'Jus de gingembre', desc:'Gingembre frais pressé, ananas, touche de citron.', price:1000, tag:'fresh' },
+      { id:'biere', name:'Bière locale (33 cl)', desc:'Servie bien fraîche, comme il se doit.', price:1500 },
+      { id:'eau', name:'Eau minérale (50 cl)', desc:'Bouteille de 50 cl.', price:500 }
+    ]
+  },
+  {
+    id: 'desserts', label: 'Desserts', icon: 'cake',
+    items: [
+      { id:'thiakry', name:'Thiakry', desc:'Couscous de mil au lait caillé, vanille, noix de coco râpée.', price:1500 },
+      { id:'salade-fruits', name:'Salade de fruits tropicaux', desc:'Mangue, ananas, papaye, banane, jus de fruit de la passion.', price:1500 },
+      { id:'beignets-banane', name:'Beignets de banane', desc:'Bananes plantains caramélisées, voile de sucre glace.', price:1000 }
+    ]
+  }
+];
+
+/* ============================================================
+   ICÔNES SVG
+============================================================ */
+const ICONS = {
+  plate:  '<path d="m16 2-2.3 2.3a3 3 0 0 0 0 4.2l1.8 1.8a3 3 0 0 0 4.2 0L22 8"/><path d="M15 15 3.3 3.3a4.2 4.2 0 0 0 0 6l7.3 7.3c.7.7 2 .7 2.8 0L15 15Zm0 0 7 7"/><path d="m2.1 21.8 6.4-6.3"/><path d="m19 5-7 7"/>',
+  salad:  '<path d="M7 21h10"/><path d="M12 21a9 9 0 0 0 9-9H3a9 9 0 0 0 9 9Z"/><path d="M11.4 12a2.4 2.4 0 0 1-.4-4.77 2.4 2.4 0 0 1 3.2-2.77 2.4 2.4 0 0 1 3.47-.63 2.4 2.4 0 0 1 3.37 3.37 2.4 2.4 0 0 1-1.1 3.7 2.5 2.5 0 0 1 .03 1.1"/>',
+  soup:   '<path d="M4 11h16a8 8 0 0 1-8 8 8 8 0 0 1-8-8Z"/><path d="M8 3v3"/><path d="M12 2v4"/><path d="M16 3v3"/>',
+  drink:  '<path d="M6 8h12l-1 12a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2Z"/><path d="M5 8h14"/><path d="M9 2 8 8"/><path d="M15 2l1 6"/>',
+  dessert:'<circle cx="9" cy="7" r="2"/><path d="M7.2 7.9 3 11v9c0 .6.4 1 1 1h16c.6 0 1-.4 1-1v-9c0-2-3-6-7-8l-3.6 2.6"/><path d="M16 13H3"/><path d="M16 17H3"/>',
+  cake:   '<circle cx="9" cy="7" r="2"/><path d="M7.2 7.9 3 11v9c0 .6.4 1 1 1h16c.6 0 1-.4 1-1v-9c0-2-3-6-7-8l-3.6 2.6"/><path d="M16 13H3"/><path d="M16 17H3"/>',
+  flame:  '<path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5"/>',
+  star:   '<path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/>',
+  snow:   '<path d="m10 20-1.25-2.5L6 18"/><path d="M10 4 8.75 6.5 6 6"/><path d="m14 20 1.25-2.5L18 18"/><path d="m14 4 1.25 2.5L18 6"/><path d="m17 21-3-6h-4"/><path d="m17 3-3 6 1.5 3"/><path d="M2 12h6.5L10 9"/><path d="m20 10-1.5 2 1.5 2"/><path d="M22 12h-6.5L14 15"/><path d="m4 10 1.5 2L4 14"/><path d="m7 21 3-6-1.5-3"/><path d="m7 3 3 6h4"/>',
+  plus:   '<path d="M5 12h14"/><path d="M12 5v14"/>',
+  minus:  '<path d="M5 12h14"/>',
+  x:      '<path d="M18 6 6 18"/><path d="m6 6 12 12"/>',
+  cart:   '<path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/>',
+  wa:     '<path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/>',
+  qr:     '<rect width="5" height="5" x="3" y="3" rx="1"/><rect width="5" height="5" x="16" y="3" rx="1"/><rect width="5" height="5" x="3" y="16" rx="1"/><path d="M21 16h-3a2 2 0 0 0-2 2v3"/><path d="M21 21v.01"/><path d="M12 7v3a2 2 0 0 1-2 2H7"/><path d="M3 12h.01"/><path d="M12 3h.01"/><path d="M12 16v.01"/>'
+};
+
+const svg = (paths, size = 20, sw = 2.2) =>
+  `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="currentColor" stroke-width="${sw}" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${paths}</svg>`;
+
+/* ============================================================
+   TAGS
+============================================================ */
+const TAGS = {
+  sig:   { label:'Signature', cls:'tag--sig',   icon:'star' },
+  pop:   { label:'Populaire', cls:'tag--pop',   icon:'flame' },
+  hot:   { label:'Épicé',     cls:'tag--hot',   icon:'flame' },
+  fresh: { label:'Frais',     cls:'tag--fresh', icon:'snow' }
+};
+
+/* ============================================================
+   ÉTAT
+============================================================ */
+const state = {
+  cat: MENU[0].id,
+  cart: {},
+  drawerOpen: false
+};
+
+const DISH_MAP = new Map();
+MENU.forEach(c => c.items.forEach(d => DISH_MAP.set(d.id, d)));
+
+const fmt = n => new Intl.NumberFormat('fr-FR').format(n) + ' F';
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+
+/* ============================================================
+   RENDU — ONGLETS
+============================================================ */
+function renderTabs() {
+  const el = $('#tabs');
+  el.innerHTML = MENU.map(cat => `
+    <button class="tab" role="tab" data-cat="${cat.id}"
+            aria-selected="${cat.id === state.cat}"
+            id="tab-${cat.id}"
+            aria-controls="dishes">
+      ${svg(ICONS[cat.icon] || ICONS.plate, 17, 2.2)}
+      ${cat.label}
+    </button>
+  `).join('');
+}
+
+/* ============================================================
+   RENDU — PLATS
+============================================================ */
+function renderDishes() {
+  const cat = MENU.find(c => c.id === state.cat);
+  const el = $('#dishes');
+  el.setAttribute('aria-labelledby', `tab-${cat.id}`);
+  el.innerHTML = cat.items.map((d, i) => {
+    const q = state.cart[d.id] || 0;
+    const img = DISH_IMAGES[d.id] || 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=600&auto=format&fit=crop';
+    return `
+      <article class="dish" data-reveal style="--d:${i * 0.05}s" data-dish="${d.id}">
+        <div class="dish__art">
+          <img src="${img}" alt="${d.name}" loading="lazy">
+        </div>
+        <div class="dish__body">
+          <div class="dish__top">
+            <h3 class="dish__name">${d.name}</h3>
+            ${d.tag ? `<span class="tag ${TAGS[d.tag].cls}">${svg(ICONS[TAGS[d.tag].icon], 11, 2.6)}${TAGS[d.tag].label}</span>` : ''}
+          </div>
+          <p class="dish__desc">${d.desc}</p>
+          <div class="dish__foot">
+            <span class="dish__price">${fmt(d.price)}</span>
+            <span data-actions="${d.id}">${actionsHTML(d.id, q)}</span>
+          </div>
+        </div>
+      </article>
+    `;
+  }).join('');
+
+  requestAnimationFrame(() => observeReveals());
+}
+
+function actionsHTML(id, q) {
+  if (q === 0) {
+    return `<button class="add-btn" data-add="${id}" aria-label="Ajouter au panier">
+      ${svg(ICONS.plus, 15, 3)} Ajouter
+    </button>`;
+  }
+  return `<div class="stepper" role="group" aria-label="Quantité">
+    <button data-dec="${id}" aria-label="Retirer un">${svg(ICONS.minus, 15, 3)}</button>
+    <span class="stepper__qty" aria-live="polite">${q}</span>
+    <button data-add="${id}" aria-label="Ajouter un">${svg(ICONS.plus, 15, 3)}</button>
+  </div>`;
+}
+
+function updateDishActions(id) {
+  const el = document.querySelector(`[data-actions="${id}"]`);
+  if (!el) return;
+  const q = state.cart[id] || 0;
+  el.innerHTML = actionsHTML(id, q);
+}
+
+/* ============================================================
+   PANIER
+============================================================ */
+function addItem(id) {
+  state.cart[id] = (state.cart[id] || 0) + 1;
+  updateDishActions(id);
+  syncCartUI();
+}
+
+function decItem(id) {
+  const q = (state.cart[id] || 0) - 1;
+  if (q <= 0) delete state.cart[id];
+  else state.cart[id] = q;
+  updateDishActions(id);
+  syncCartUI();
+}
+
+function removeItem(id) {
+  delete state.cart[id];
+  updateDishActions(id);
+  syncCartUI();
+  renderCartBody();
+}
+
+function cartLines() {
+  return Object.entries(state.cart)
+    .map(([id, qty]) => ({ dish: DISH_MAP.get(id), qty }))
+    .filter(x => x.dish && x.qty > 0);
+}
+
+function cartCount() { return Object.values(state.cart).reduce((a, b) => a + b, 0); }
+function cartTotal() { return cartLines().reduce((s, l) => s + l.dish.price * l.qty, 0); }
+
+function syncCartUI() {
+  const n = cartCount();
+  const total = cartTotal();
+
+  const badge = $('#cartCount');
+  badge.textContent = n;
+  badge.classList.toggle('show', n > 0);
+  if (n > 0) {
+    badge.classList.remove('pop');
+    void badge.offsetWidth;
+    badge.classList.add('pop');
+  }
+
+  const bar = $('#cartBar');
+  bar.classList.toggle('show', n > 0 && !state.drawerOpen);
+  $('#barCount').textContent = n;
+  $('#barTotal').textContent = fmt(total);
+
+  $('#drawerTotal').textContent = fmt(total);
+  $('#drawerFoot').hidden = n === 0;
+  $('#waLink').href = buildWhatsAppURL();
+
+  if (state.drawerOpen) renderCartBody();
+}
+
+function buildWhatsAppURL() {
+  const lines = cartLines().map(l => `• ${l.qty} × ${l.dish.name} — ${fmt(l.dish.price * l.qty)}`);
+  const msg = [
+    `Bonjour ${RESTAURANT.name} !`,
+    'Je souhaite passer une commande :',
+    '',
+    ...lines,
+    '',
+    `Total : ${fmt(cartTotal())}`,
+    '',
+    'Merci !'
+  ].join('\n');
+  return `https://wa.me/${RESTAURANT.phone}?text=${encodeURIComponent(msg)}`;
+}
+
+/* ============================================================
+   RENDU — CORPS DU PANIER
+============================================================ */
+function renderCartBody() {
+  const body = $('#drawerBody');
+  const lines = cartLines();
+
+  if (lines.length === 0) {
+    body.innerHTML = `
+      <div class="drawer__empty">
+        <span class="drawer__empty-ico">${svg(ICONS.cart, 38, 1.8)}</span>
+        <b>Votre panier est vide</b>
+        <p>Parcourez la carte et ajoutez vos plats préférés.</p>
+        <button class="btn btn--primary" id="emptyGoMenu" style="margin-top:8px">
+          Découvrir le menu
+        </button>
+      </div>`;
+    return;
+  }
+
+  body.innerHTML = lines.map(l => {
+    const img = DISH_IMAGES[l.dish.id] || '';
+    return `
+    <div class="cart-item" data-cart="${l.dish.id}">
+      <div class="cart-item__art"><img src="${img}" alt="${l.dish.name}" loading="lazy"></div>
+      <div class="cart-item__body">
+        <div class="cart-item__top">
+          <div>
+            <p class="cart-item__name">${l.dish.name}</p>
+            <p class="cart-item__unit">${fmt(l.dish.price)} / pièce</p>
+          </div>
+          <button class="cart-item__remove" data-remove="${l.dish.id}" aria-label="Retirer du panier">
+            ${svg(ICONS.x, 15, 2.6)}
+          </button>
+        </div>
+        <div class="cart-item__bottom">
+          <div class="stepper stepper--light" role="group" aria-label="Quantité">
+            <button data-dec="${l.dish.id}" aria-label="Retirer un">${svg(ICONS.minus, 14, 3)}</button>
+            <span class="stepper__qty">${l.qty}</span>
+            <button data-add="${l.dish.id}" aria-label="Ajouter un">${svg(ICONS.plus, 14, 3)}</button>
+          </div>
+          <span class="cart-item__price">${fmt(l.dish.price * l.qty)}</span>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+/* ============================================================
+   DRAWER
+============================================================ */
+let lastFocused = null;
+
+function openDrawer() {
+  if (state.drawerOpen) return;
+  state.drawerOpen = true;
+  lastFocused = document.activeElement;
+
+  const overlay = $('#overlay');
+  const drawer = $('#drawer');
+  overlay.hidden = false;
+  drawer.hidden = false;
+  renderCartBody();
+  syncCartUI();
+
+  requestAnimationFrame(() => {
+    overlay.classList.add('show');
+    drawer.classList.add('open');
+    document.body.classList.add('no-scroll');
+    setTimeout(() => $('#drawerClose').focus(), 120);
+  });
+
+  $('#cartBar').classList.remove('show');
+}
+
+function closeDrawer() {
+  if (!state.drawerOpen) return;
+  state.drawerOpen = false;
+
+  const overlay = $('#overlay');
+  const drawer = $('#drawer');
+  overlay.classList.remove('show');
+  drawer.classList.remove('open');
+  document.body.classList.remove('no-scroll');
+
+  setTimeout(() => {
+    overlay.hidden = true;
+    drawer.hidden = true;
+    syncCartUI();
+    if (lastFocused && lastFocused.focus) lastFocused.focus();
+  }, 450);
+}
+
+function trapFocus(e) {
+  if (!state.drawerOpen || e.key !== 'Tab') return;
+  const drawer = $('#drawer');
+  const focusables = $$('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])', drawer)
+    .filter(el => !el.disabled && el.offsetParent !== null);
+  if (focusables.length === 0) return;
+  const first = focusables[0];
+  const last = focusables[focusables.length - 1];
+  if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+  else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+}
+
+/* ============================================================
+   TOAST
+============================================================ */
+let toastTimer;
+function toast(msg, duration = 2600) {
+  const el = $('#toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove('show'), duration);
+}
+
+/* ============================================================
+   QR CODE DÉCORATIF
+============================================================ */
+function buildQR() {
+  const size = 25;
+  const isFinder = (x, y) =>
+    (x < 8 && y < 8) || (x >= size - 8 && y < 8) || (x < 8 && y >= size - 8);
+
+  let cells = '';
+  for (let y = 0; y < size; y++) {
+    for (let x = 0; x < size; x++) {
+      if (isFinder(x, y)) continue;
+      const h = (x * 73856093 ^ y * 19349663 ^ 1542469173) >>> 0;
+      if (h % 100 < 44) {
+        cells += `<rect x="${x + 0.06}" y="${y + 0.06}" width="0.88" height="0.88" rx="0.18" fill="#1C1410"/>`;
+      }
+    }
+  }
+
+  const finder = (x, y) => `
+    <g transform="translate(${x} ${y})">
+      <rect width="7" height="7" rx="1.4" fill="#1C1410"/>
+      <rect x="1" y="1" width="5" height="5" fill="#FFFFFF"/>
+      <rect x="2" y="2" width="3" height="3" rx="0.7" fill="#1C1410"/>
+    </g>`;
+
+  $('#qrWrap').innerHTML = `
+    <svg viewBox="-1 -1 27 27" width="180" height="180" role="img" aria-label="QR code décoratif">
+      <rect x="-1" y="-1" width="27" height="27" fill="#FFFFFF"/>
+      ${cells}
+      ${finder(0, 0)}
+      ${finder(18, 0)}
+      ${finder(0, 18)}
+    </svg>`;
+}
+
+/* ============================================================
+   REVEAL
+============================================================ */
+let revealObserver;
+function observeReveals() {
+  if (!revealObserver) {
+    revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  }
+  $$('[data-reveal]:not(.in)').forEach(el => revealObserver.observe(el));
+}
+
+/* ============================================================
+   SCROLL
+============================================================ */
+const header = $('#header');
+const progressBar = $('#progressBar');
+const baobab = $('#baobab');
+const navLinks = $$('.nav__link');
+const sections = ['menu', 'histoire', 'infos'].map(id => document.getElementById(id)).filter(Boolean);
+
+let ticking = false;
+function onScroll() {
+  if (ticking) return;
+  ticking = true;
+  requestAnimationFrame(() => {
+    const y = window.scrollY;
+    const docH = document.documentElement.scrollHeight - window.innerHeight;
+    const pct = docH > 0 ? (y / docH) * 100 : 0;
+    progressBar.style.width = pct + '%';
+
+    header.classList.toggle('scrolled', y > 40);
+
+    if (baobab && window.innerWidth > 600) {
+      const shift = Math.min(y * 0.14, 70);
+      baobab.style.transform = `translateY(${shift}px)`;
+    }
+
+    let current = '';
+    const probe = window.innerHeight * 0.35;
+    sections.forEach(sec => {
+      const r = sec.getBoundingClientRect();
+      if (r.top <= probe && r.bottom > probe) current = sec.id;
+    });
+    navLinks.forEach(a => a.classList.toggle('active', a.dataset.nav === current));
+
+    ticking = false;
+  });
+}
+window.addEventListener('scroll', onScroll, { passive: true });
+
+/* ============================================================
+   PARALLAXE SOURIS
+============================================================ */
+const heroSpot = $('#heroSpot');
+const heroSection = document.querySelector('.hero');
+if (heroSection && window.matchMedia('(hover:hover) and (min-width:900px)').matches) {
+  heroSection.addEventListener('mousemove', (e) => {
+    const r = heroSection.getBoundingClientRect();
+    const x = e.clientX - r.left;
+    const y = e.clientY - r.top;
+    heroSpot.style.left = x + 'px';
+    heroSpot.style.top = y + 'px';
+    if (baobab) {
+      const dx = (x / r.width - 0.5) * 12;
+      baobab.style.transform = `translate(${dx}px, ${Math.min(window.scrollY * 0.14, 70)}px)`;
+    }
+  });
+}
+
+/* ============================================================
+   TILT
+============================================================ */
+function attachTilt() {
+  if (!window.matchMedia('(hover:hover) and (min-width:900px)').matches) return;
+  $$('.dish').forEach(card => {
+    if (card.dataset.tilt) return;
+    card.dataset.tilt = '1';
+    card.addEventListener('mousemove', (e) => {
+      const r = card.getBoundingClientRect();
+      const px = (e.clientX - r.left) / r.width - 0.5;
+      const py = (e.clientY - r.top) / r.height - 0.5;
+      card.style.transform = `perspective(900px) rotateY(${px * 4}deg) rotateX(${-py * 4}deg) translateY(-4px)`;
+    });
+    card.addEventListener('mouseleave', () => { card.style.transform = ''; });
+  });
+}
+
+/* ============================================================
+   RIPPLE
+============================================================ */
+document.addEventListener('pointerdown', (e) => {
+  const btn = e.target.closest('.btn, .mini-btn, .cart-btn, .add-btn');
+  if (!btn) return;
+  const r = btn.getBoundingClientRect();
+  const size = Math.max(r.width, r.height);
+  const ripple = document.createElement('span');
+  ripple.className = 'ripple';
+  ripple.style.width = ripple.style.height = size + 'px';
+  ripple.style.left = (e.clientX - r.left - size / 2) + 'px';
+  ripple.style.top = (e.clientY - r.top - size / 2) + 'px';
+  btn.appendChild(ripple);
+  setTimeout(() => ripple.remove(), 700);
+});
+
+/* ============================================================
+   DÉLÉGATION
+============================================================ */
+document.addEventListener('click', (e) => {
+  const addBtn = e.target.closest('[data-add]');
+  const decBtn = e.target.closest('[data-dec]');
+  const remBtn = e.target.closest('[data-remove]');
+  const tabBtn = e.target.closest('[data-cat]');
+  const emptyGo = e.target.closest('#emptyGoMenu');
+
+  if (addBtn) { addItem(addBtn.dataset.add); return; }
+  if (decBtn) { decItem(decBtn.dataset.dec); return; }
+  if (remBtn) { removeItem(remBtn.dataset.remove); return; }
+
+  if (tabBtn) {
+    const id = tabBtn.dataset.cat;
+    if (id === state.cat) return;
+    state.cat = id;
+    renderTabs();
+    renderDishes();
+    attachTilt();
+    const sticky = document.querySelector('.tabs-sticky');
+    const top = sticky.getBoundingClientRect().top + window.scrollY - 92;
+    window.scrollTo({ top, behavior: 'smooth' });
+    return;
+  }
+
+  if (emptyGo) {
+    closeDrawer();
+    setTimeout(() => document.getElementById('menu').scrollIntoView({ behavior: 'smooth' }), 200);
+    return;
+  }
+});
+
+document.addEventListener('keydown', (e) => {
+  const tab = e.target.closest('.tab');
+  if (tab && (e.key === 'ArrowRight' || e.key === 'ArrowLeft')) {
+    const tabs = $$('.tab');
+    const i = tabs.indexOf(tab);
+    const next = e.key === 'ArrowRight' ? (i + 1) % tabs.length : (i - 1 + tabs.length) % tabs.length;
+    tabs[next].focus();
+    tabs[next].click();
+  }
+  if (e.key === 'Escape') {
+    if (state.drawerOpen) closeDrawer();
+  }
+  trapFocus(e);
+});
+
+/* ============================================================
+   BOUTONS PANIER
+============================================================ */
+$('#cartBtn').addEventListener('click', openDrawer);
+$('#cartBar').addEventListener('click', openDrawer);
+$('#drawerClose').addEventListener('click', closeDrawer);
+$('#overlay').addEventListener('click', closeDrawer);
+$('#continueShopping').addEventListener('click', () => {
+  closeDrawer();
+  setTimeout(() => document.getElementById('menu').scrollIntoView({ behavior: 'smooth' }), 200);
+});
+
+/* ============================================================
+   LIENS WHATSAPP + TÉLÉPHONE
+============================================================ */
+function wireContactLinks() {
+  const wa = `https://wa.me/${RESTAURANT.phone}?text=${encodeURIComponent(
+    `Bonjour ${RESTAURANT.name} ! Je souhaite réserver une table.`
+  )}`;
+  const contact = $('#contactWaBtn');
+  const footer = $('#footerWaBtn');
+  if (contact) contact.href = wa;
+  if (footer) footer.href = wa;
+
+  const call = $('#contactCallBtn');
+  if (call) call.href = `tel:+${RESTAURANT.phone}`;
+  const fp = $('#footerPhone');
+  if (fp) fp.href = `tel:+${RESTAURANT.phone}`;
+}
+
+/* ============================================================
+   INIT
+============================================================ */
+function init() {
+  buildQR();
+  renderTabs();
+  renderDishes();
+  renderCartBody();
+  syncCartUI();
+  observeReveals();
+  attachTilt();
+  onScroll();
+  wireContactLinks();
+
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(() => {
+      observeReveals();
+      attachTilt();
+    });
+  }
+}
+
+init();
+</script>
+</body>
+</html>
